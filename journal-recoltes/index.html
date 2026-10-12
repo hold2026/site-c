@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Journal de récoltes du potager</title></head>
+<body>
+<h1>Journal de récoltes</h1>
+<p><em>Contenu généré par IA. Outil gratuit : vos données restent dans votre navigateur (stockage local) et ne sont pas envoyées.</em></p>
+<form id="f">
+<label>Date <input type="date" id="d" required></label>
+<label>Légume <input type="text" id="l" required></label>
+<label>Poids (kg) <input type="number" id="p" step="0.01" min="0" required></label>
+<button type="submit">Ajouter</button>
+</form>
+<ul id="liste"></ul>
+<p>Total : <strong id="t">0</strong> kg</p>
+<button id="r" type="button">Tout effacer</button>
+<p><a href="../index.html">Retour à l'accueil</a></p>
+<script>
+var K='journalRecoltes';
+function lire(){try{return JSON.parse(localStorage.getItem(K))||[]}catch(e){return []}}
+function afficher(){var a=lire(),u=document.getElementById('liste'),s=0;u.innerHTML='';a.forEach(function(x){s+=x.p;var li=document.createElement('li');li.textContent=x.d+' — '+x.l+' : '+x.p+' kg';u.appendChild(li);});document.getElementById('t').textContent=s.toFixed(2);}
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();var a=lire();a.push({d:document.getElementById('d').value,l:document.getElementById('l').value,p:parseFloat(document.getElementById('p').value)||0});localStorage.setItem(K,JSON.stringify(a));e.target.reset();afficher();});
+document.getElementById('r').addEventListener('click',function(){if(confirm('Effacer le journal ?')){localStorage.removeItem(K);afficher();}});
+afficher();
+</script>
+<script data-goatcounter="https://hold2026.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body></html>
